@@ -1,0 +1,33 @@
+{% extends 'common/base/base.html' %}
+{% block site_heading %}
+    Hike Details
+{% endblock %}
+{% block site_content %}
+<div class="card m-3" style="width: 40rem;">
+    <div class="item">
+        <h2>{{ hike.name }}</h2>
+        <img class="card-img-top" src="{{ hike.image.url }}" alt="Card image cap">
+
+    </div>
+    <h2>Details</h2>
+    <div class="list-left">
+        {{ hike.description }}
+    </div>
+    <h3>To be included map</h3>
+    {#            <div class="recipe-info-full">#}
+    <div>
+        to be included Map info, as list, i.e. elevation, km, time
+    </div>
+    <div class="buttons-container">
+        <a class="button edit" href="{% url 'edit hike' hike.id %}">Edit</a>
+        <a class="button delete" href="{% url 'delete hike' hike.id %}">Delete</a>
+    </div>
+</div>
+</div>
+
+</div>
+
+
+</body>
+</html>
+{% endblock %}

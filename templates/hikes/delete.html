@@ -1,0 +1,57 @@
+{#{% extends 'common/base/base.html' %}#}
+{#{% block site_heading %}#}
+{#    All Hikes#}
+{#{% endblock %}#}
+{#{% block site_content %}#}
+{#    <div class="col-lg-6 offset-lg-3">#}
+{#        <div class="item">#}
+{#            <form method="POST" aciton="{% url 'delete hike' hike.id %}">#}
+{##}
+{#                    <div class="form-group">#}
+{#                <label for="name">Name</label>#}
+{#                {{ form.name }}#}
+{#                    </div>#}
+{#                #}
+{#                <h2>#}
+{#                    <img class="card-img-top" src="{{ hike.image.url }}" alt="Card image cap">#}
+{#                    {{ form.image_url }}#}
+{##}
+{#                </h2>#}
+{#                <h3>#}
+{#                    {{ form.description.label }}#}
+{#                    {{ form.description }}#}
+{#                    {{ form.description.erorrs }}#}
+{#                </h3>#}
+{##}
+{#                {% csrf_token %}#}
+{##}
+{##}
+{#                <input type="submit" class="button delete" value="Delete">#}
+{#            </form>#}
+{#        </div>#}
+{#    </div>#}
+{##}
+{#{% endblock %}#}
+
+{% extends 'common/base/base.html' %}
+
+{% block site_heading %}Delete Hike{% endblock %}
+
+{% block site_content %}
+    <form class="col-lg-6 offset-lg-3" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name">Name</label>
+            {{ form.name }}
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            {{ form.description }}
+        </div>
+        <div class="form-group">
+            <img class="card-img-top" src="{{ hike.image.url }}" alt="Card image cap">
+                  {{ form.image_url }}
+        </div>
+        <input type="submit" value="Delete" class="btn btn-primary mt-3">
+    </form>
+{% endblock %}

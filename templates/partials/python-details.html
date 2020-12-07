@@ -1,0 +1,32 @@
+{% load static %}
+{#<script src="{% static 'js/like.js' %}"></script> <!-- This is how to include a static file -->#}
+<link rel="stylesheet" href="{% static 'css/like.css' %}" type="text/css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="card m-3" style="width: 18rem;">
+
+    <img class="card-img-top" src="{{ hike.image.url }}" alt="Card image cap">
+    <div class="card-body">
+        <h5 class="text-capitalize">{{ hike.name }}</h5>
+        <p class="card-text">{{ hike.description|truncatechars:120 }} </p>
+    </div>
+    <div class="card-body">
+        {% if user.is_authenticated %}
+            <p>
+                <a class="card-text-right" style="padding-right: 10px">Likes: {{ hike.like_set.count }}</a>
+                 <a href="{% url 'like hike' hike.id %}"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                {#            <a href="{% url 'like hike' hike.id %}"><i class="fa fa-heart-o"></i></a>#}
+            </p>
+            <a class="font-weight-light" href="{% url 'hike details' hike.id hike.name %}">See more</a>
+        {% else %}
+            <a class="text-info" href="{% url 'login user' %}">Login to see more!</a>
+        {% endif %}
+
+        {#        #to be changed to actually show details of the hike.#}
+        {% if hike.can_delete %}
+            <button class="btn btn-danger">Delete</button>
+        {% endif %}
+    </div>
+</div>
+
+
+

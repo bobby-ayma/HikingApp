@@ -1,0 +1,22 @@
+{% extends 'common/base/base.html' %}
+
+{% block site_heading %}Edit Hike{% endblock %}
+
+{% block site_content %}
+    <form class="col-lg-6 offset-lg-3" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name">Name</label>
+            {{ form.name }}
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            {{ form.description }}
+        </div>
+        <div class="form-group">
+            <img class="card-img-top" src="{{ hike.image.url }}" alt="Card image cap">
+                  {{ form.image_url }}
+        </div>
+        <input type="submit" value="Edit" class="btn btn-primary mt-3">
+    </form>
+{% endblock %}
