@@ -17,6 +17,7 @@ class Hike(models.Model):
 
 class Like(models.Model):
     hike = models.ForeignKey(Hike, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null = True, on_delete=models.CASCADE)
     definition = models.CharField(max_length=2, default=0)
 
 

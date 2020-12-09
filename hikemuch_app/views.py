@@ -124,9 +124,26 @@ def delete_hike(request, pk):
 
 #like functionality for hikes on the index page
 
+
+def object_finder(h_id, u_id):
+    all_likes = Like.objects.filter(hike__name__contains=h_id)
+    if u_id not in all_likes:
+        try:
+            return [like for like in all_likes if like.user_id == u_id][0].id
+        except:
+            return 'create'
+    else:
+        return 'create'
+
+
 def like_hike(request, pk):
     hike = Hike.objects.get(pk=pk)
-    like = Like(definition='as')
+    like = Like(definition='as', user=request.user)
     like.hike = hike
-    like.save()
-    return redirect('index')
+    test = object_finder(hike.name, request.user.id)
+    if  test == 'create':
+        like.save()
+        return redirect('index')
+    else:
+        Like.objects.filter(id=int(test)).delete()
+        return redirect('index')

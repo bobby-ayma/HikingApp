@@ -1,10 +1,30 @@
-.fa-heart-o {
-  color: red;
-  cursor: pointer;
+.container{
+  margin: 0;
+  padding: 0;
+  outline: 0
+  }
+
+
+.container {
+  position: center;
+  padding: 0.2em 0.2em;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-radius: 80px;
+  background-color: #fafafa;
+
 }
 
-.fa-heart {
-  color: red;
-  cursor: pointer;
+.container i{
+  font-size: 1.2rem;
+  transition: .4s;
 }
 
+
+.container:hover i{
+  color: blue;
+}
+
+.fas{
+  color: blue;
+  transition: .4s;
+}
