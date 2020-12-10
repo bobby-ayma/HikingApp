@@ -3,31 +3,39 @@
     Hike Details
 {% endblock %}
 {% block site_content %}
-<div class="card m-3" style="width: 40rem;">
-    <div class="item">
-        <h2>{{ hike.name }}</h2>
-        <img class="card-img-top" src="{{ hike.image.url }}" alt="Card image cap">
+    <div class="card m-3" style="width: 40rem;">
+        <div class="item">
+            <h2>{{ hike.name }}</h2>
+            <img class="card-img-top" src="{{ hike.image.url }}" alt="Card image cap">
 
-    </div>
-    <h2>Details</h2>
-    <div class="list-left">
-        {{ hike.description }}
-    </div>
-    <h3>To be included map</h3>
-    {#            <div class="recipe-info-full">#}
-    <div>
-        to be included Map info, as list, i.e. elevation, km, time
-    </div>
-    <div class="buttons-container">
-        <a class="button edit" href="{% url 'edit hike' hike.id %}">Edit</a>
-        <a class="button delete" href="{% url 'delete hike' hike.id %}">Delete</a>
-    </div>
-</div>
-</div>
+        </div>
+        <h2>Details</h2>
+        <div class="card-body">
+            {{ hike.description }}
+        </div>
+        <div class="card-body">To be included map
+            {#            <div class="recipe-info-full">#}
+            <div>
+                <h3>to be included Map info, as list, i.e. elevation, km, time</h3>
+            </div>
 
-</div>
+            {% for comment in hike.comments.all %}
+                <div class="card-body">
+                    <div class="date">{{ comment.created_date }}</div>
+                    <strong>{{ comment.author }}</strong>
+                    <p>{{ comment.text|linebreaks }}</p>
+                </div>
+            {% empty %}
+                <p>No comments here yet :(</p>
+            {% endfor %}
+            <div class="card-body">
+                <a class="btn btn-default" href="{% url 'add_comment_to_hike' pk=hike.pk %}">Add comment</a>
+                <a class="button edit" href="{% url 'edit hike' hike.id %}">Edit</a>
+                <a class="button delete" href="{% url 'delete hike' hike.id %}">Delete</a>
+                            </div>
+        </div>
+    </div>
 
-
-</body>
-</html>
+    </body>
+    </html>
 {% endblock %}

@@ -797,7 +797,7 @@ false Zulu
     <database id="4" parent="1" name="hikemuch_db">
       <ObjectId>17376</ObjectId>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>1015</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1226</IntrospectionStateNumber>
       <Relations>sequence|table|17383|17385|1
 sequence|table|17394|17396|1
 sequence|table|17404|17406|1
@@ -887,7 +887,7 @@ sequence|table|17597|17599|1
       <Comment>standard public schema</Comment>
       <StateNumber>287</StateNumber>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>1018</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1227</IntrospectionStateNumber>
       <Current>1</Current>
     </schema>
     <access-method id="22" parent="4" name="heap">
@@ -58702,7 +58702,7 @@ r/10
     <table id="4942" parent="21" name="hikemuch_app_comment">
       <ObjectId>17599</ObjectId>
       <Owner>postgres</Owner>
-      <StateNumber>1007</StateNumber>
+      <StateNumber>1225</StateNumber>
     </table>
     <table id="4943" parent="21" name="hikemuch_app_hike">
       <ObjectId>17580</ObjectId>
@@ -58712,7 +58712,7 @@ r/10
     <table id="4944" parent="21" name="hikemuch_app_like">
       <ObjectId>17591</ObjectId>
       <Owner>postgres</Owner>
-      <StateNumber>1007</StateNumber>
+      <StateNumber>1070</StateNumber>
     </table>
     <table id="4945" parent="21" name="hikemuch_auth_userprofile">
       <ObjectId>17543</ObjectId>
@@ -107009,36 +107009,62 @@ model</ColNames>
       <StateNumber>1007</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="16009" parent="4942" name="pet_id">
+    <column id="16009" parent="4942" name="hike_id">
       <Position>3</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1007</StateNumber>
+      <StateNumber>1225</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <index id="16010" parent="4942" name="hikemuch_app_comment_pkey">
+    <column id="16010" parent="4942" name="approved_comment">
+      <Position>4</Position>
+      <DataType>boolean|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1225</StateNumber>
+      <TypeId>16</TypeId>
+    </column>
+    <column id="16011" parent="4942" name="author_id">
+      <Position>5</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1225</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="16012" parent="4942" name="created_date">
+      <Position>6</Position>
+      <DataType>timestamp with time zone|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1225</StateNumber>
+      <TypeId>1184</TypeId>
+    </column>
+    <index id="16013" parent="4942" name="hikemuch_app_comment_pkey">
       <ObjectId>17606</ObjectId>
       <StateNumber>1007</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <index id="16011" parent="4942" name="hikemuch_app_comment_pet_id_624df624">
+    <index id="16014" parent="4942" name="hikemuch_app_comment_pet_id_624df624">
       <ObjectId>17619</ObjectId>
       <StateNumber>1007</StateNumber>
-      <ColNames>pet_id</ColNames>
+      <ColNames>hike_id</ColNames>
     </index>
-    <key id="16012" parent="4942" name="hikemuch_app_comment_pkey">
+    <index id="16015" parent="4942" name="hikemuch_app_comment_author_id_1893a515">
+      <ObjectId>17643</ObjectId>
+      <StateNumber>1225</StateNumber>
+      <ColNames>author_id</ColNames>
+    </index>
+    <key id="16016" parent="4942" name="hikemuch_app_comment_pkey">
       <ObjectId>17607</ObjectId>
       <StateNumber>1007</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>hikemuch_app_comment_pkey</UnderlyingIndexName>
     </key>
-    <foreign-key id="16013" parent="4942" name="hikemuch_app_comment_pet_id_624df624_fk_hikemuch_app_hike_id">
-      <ObjectId>17614</ObjectId>
-      <StateNumber>1007</StateNumber>
-      <ColNames>pet_id</ColNames>
+    <foreign-key id="16017" parent="4942" name="hikemuch_app_comment_hike_id_0dc7a473_fk_hikemuch_app_hike_id">
+      <ObjectId>17631</ObjectId>
+      <StateNumber>1225</StateNumber>
+      <ColNames>hike_id</ColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
       <RefTableId>17580</RefTableId>
@@ -107047,7 +107073,19 @@ model</ColNames>
       <RefKeyName>hikemuch_app_hike_pkey</RefKeyName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="16014" parent="4943" name="id">
+    <foreign-key id="16018" parent="4942" name="hikemuch_app_comment_author_id_1893a515_fk_auth_user_id">
+      <ObjectId>17637</ObjectId>
+      <StateNumber>1225</StateNumber>
+      <ColNames>author_id</ColNames>
+      <Deferrable>1</Deferrable>
+      <InitiallyDeferred>1</InitiallyDeferred>
+      <RefTableId>17432</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>auth_user</RefTableName>
+      <RefKeyName>auth_user_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="16019" parent="4943" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -107055,42 +107093,42 @@ model</ColNames>
       <DefaultExpression>nextval(&apos;hikemuch_app_hike_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="16015" parent="4943" name="name">
+    <column id="16020" parent="4943" name="name">
       <Position>2</Position>
       <DataType>varchar(25)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>967</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="16016" parent="4943" name="description">
+    <column id="16021" parent="4943" name="description">
       <Position>3</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>967</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="16017" parent="4943" name="image">
+    <column id="16022" parent="4943" name="image">
       <Position>4</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>967</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="16018" parent="4943" name="hikemuch_app_hike_pkey">
+    <index id="16023" parent="4943" name="hikemuch_app_hike_pkey">
       <ObjectId>17587</ObjectId>
       <StateNumber>967</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <key id="16019" parent="4943" name="hikemuch_app_hike_pkey">
+    <key id="16024" parent="4943" name="hikemuch_app_hike_pkey">
       <ObjectId>17588</ObjectId>
       <StateNumber>967</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>hikemuch_app_hike_pkey</UnderlyingIndexName>
     </key>
-    <column id="16020" parent="4944" name="id">
+    <column id="16025" parent="4944" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -107098,43 +107136,54 @@ model</ColNames>
       <DefaultExpression>nextval(&apos;hikemuch_app_like_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="16021" parent="4944" name="definition">
+    <column id="16026" parent="4944" name="definition">
       <Position>2</Position>
       <DataType>varchar(2)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>1007</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="16022" parent="4944" name="pet_id">
+    <column id="16027" parent="4944" name="hike_id">
       <Position>3</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>1007</StateNumber>
+      <StateNumber>1021</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <index id="16023" parent="4944" name="hikemuch_app_like_pkey">
+    <column id="16028" parent="4944" name="user_id">
+      <Position>4</Position>
+      <DataType>integer|0s</DataType>
+      <StateNumber>1070</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="16029" parent="4944" name="hikemuch_app_like_pkey">
       <ObjectId>17595</ObjectId>
       <StateNumber>1007</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <index id="16024" parent="4944" name="hikemuch_app_like_pet_id_54816518">
+    <index id="16030" parent="4944" name="hikemuch_app_like_pet_id_54816518">
       <ObjectId>17613</ObjectId>
       <StateNumber>1007</StateNumber>
-      <ColNames>pet_id</ColNames>
+      <ColNames>hike_id</ColNames>
     </index>
-    <key id="16025" parent="4944" name="hikemuch_app_like_pkey">
+    <index id="16031" parent="4944" name="hikemuch_app_like_user_id_f717af02">
+      <ObjectId>17630</ObjectId>
+      <StateNumber>1070</StateNumber>
+      <ColNames>user_id</ColNames>
+    </index>
+    <key id="16032" parent="4944" name="hikemuch_app_like_pkey">
       <ObjectId>17596</ObjectId>
       <StateNumber>1007</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>hikemuch_app_like_pkey</UnderlyingIndexName>
     </key>
-    <foreign-key id="16026" parent="4944" name="hikemuch_app_like_pet_id_54816518_fk_hikemuch_app_hike_id">
-      <ObjectId>17608</ObjectId>
-      <StateNumber>1007</StateNumber>
-      <ColNames>pet_id</ColNames>
+    <foreign-key id="16033" parent="4944" name="hikemuch_app_like_hike_id_a931f663_fk_hikemuch_app_hike_id">
+      <ObjectId>17620</ObjectId>
+      <StateNumber>1021</StateNumber>
+      <ColNames>hike_id</ColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
       <RefTableId>17580</RefTableId>
@@ -107143,7 +107192,19 @@ model</ColNames>
       <RefKeyName>hikemuch_app_hike_pkey</RefKeyName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="16027" parent="4945" name="id">
+    <foreign-key id="16034" parent="4944" name="hikemuch_app_like_user_id_f717af02_fk_auth_user_id">
+      <ObjectId>17625</ObjectId>
+      <StateNumber>1070</StateNumber>
+      <ColNames>user_id</ColNames>
+      <Deferrable>1</Deferrable>
+      <InitiallyDeferred>1</InitiallyDeferred>
+      <RefTableId>17432</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>auth_user</RefTableName>
+      <RefKeyName>auth_user_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="16035" parent="4945" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -107151,54 +107212,54 @@ model</ColNames>
       <DefaultExpression>nextval(&apos;hikemuch_auth_userprofile_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="16028" parent="4945" name="date_of_birth">
+    <column id="16036" parent="4945" name="date_of_birth">
       <Position>2</Position>
       <DataType>timestamp with time zone|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>944</StateNumber>
       <TypeId>1184</TypeId>
     </column>
-    <column id="16029" parent="4945" name="profile_image">
+    <column id="16037" parent="4945" name="profile_image">
       <Position>3</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>944</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="16030" parent="4945" name="user_id">
+    <column id="16038" parent="4945" name="user_id">
       <Position>4</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>944</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <index id="16031" parent="4945" name="hikemuch_auth_userprofile_pkey">
+    <index id="16039" parent="4945" name="hikemuch_auth_userprofile_pkey">
       <ObjectId>17547</ObjectId>
       <StateNumber>944</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <index id="16032" parent="4945" name="hikemuch_auth_userprofile_user_id_key">
+    <index id="16040" parent="4945" name="hikemuch_auth_userprofile_user_id_key">
       <ObjectId>17549</ObjectId>
       <StateNumber>944</StateNumber>
       <ColNames>user_id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="16033" parent="4945" name="hikemuch_auth_userprofile_pkey">
+    <key id="16041" parent="4945" name="hikemuch_auth_userprofile_pkey">
       <ObjectId>17548</ObjectId>
       <StateNumber>944</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>hikemuch_auth_userprofile_pkey</UnderlyingIndexName>
     </key>
-    <key id="16034" parent="4945" name="hikemuch_auth_userprofile_user_id_key">
+    <key id="16042" parent="4945" name="hikemuch_auth_userprofile_user_id_key">
       <ObjectId>17550</ObjectId>
       <StateNumber>944</StateNumber>
       <ColNames>user_id</ColNames>
       <UnderlyingIndexName>hikemuch_auth_userprofile_user_id_key</UnderlyingIndexName>
     </key>
-    <foreign-key id="16035" parent="4945" name="hikemuch_auth_userprofile_user_id_b945a75a_fk_auth_user_id">
+    <foreign-key id="16043" parent="4945" name="hikemuch_auth_userprofile_user_id_b945a75a_fk_auth_user_id">
       <ObjectId>17551</ObjectId>
       <StateNumber>944</StateNumber>
       <ColNames>user_id</ColNames>

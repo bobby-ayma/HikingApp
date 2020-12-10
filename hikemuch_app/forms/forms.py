@@ -1,5 +1,5 @@
 from hikemuch_app.forms.common import DisabledFormMixin
-from hikemuch_app.models import Hike
+from hikemuch_app.models import Hike, Comment
 from django import forms
 
 
@@ -55,3 +55,10 @@ class DeleteHikeForm(HikeCreateForm, DisabledFormMixin):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         DisabledFormMixin.__init__(self)
+
+
+class CommentForm(forms.ModelForm):
+
+    class Meta:
+        model = Comment
+        fields = ('author', 'text')

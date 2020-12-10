@@ -20,11 +20,37 @@
 }
 
 
-.container:hover i{
-  color: blue;
+.bottom-container{
+  padding-top: 20px;
+  padding-bottom: 0px;
 }
 
-.fas{
-  color: blue;
-  transition: .4s;
+.fa-heart:hover{
+  color: deeppink;
+}
+
+.far.fa-heart{
+  padding-left: 140px;
+}
+/*.container:hover i{*/
+/*  color: blue;*/
+/*}*/
+
+/*.fullheart{*/
+/*  color: blue;*/
+/*  transition: .4s;*/
+/*}*/
+
+.card-img-top {
+  /* This is where magic happens */
+  height: 200px;
+  max-width: 100%;
+  width: auto;
+
+  display: block;
+  margin: 0 auto;
+}
+
+.card m-3{
+  max-height: 500px;
 }

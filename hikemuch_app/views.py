@@ -1,10 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, FormView
 
 from HikingApp.view_mixins import GroupRequiredMixin
-from .forms.forms import HikeCreateForm, FilterForm
+from .forms.forms import HikeCreateForm, FilterForm, CommentForm
 from .forms.forms import DeleteHikeForm
 from .models import Hike, Like
 
@@ -147,3 +147,17 @@ def like_hike(request, pk):
     else:
         Like.objects.filter(id=int(test)).delete()
         return redirect('index')
+
+
+def add_comment_to_hike(request, pk):
+    hike = get_object_or_404(Hike, pk=pk)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save()
+            comment.post = hike
+            comment.save()
+            return redirect('add_comment_to_hike', pk=hike.pk)
+    else:
+        form = CommentForm()
+    return render(request, 'hikes/add_comment_to_hike.html', {'form': form})

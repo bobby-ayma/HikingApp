@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import HikeCreateView, edit_hike, delete_hike, like_hike
+from .views import HikeCreateView, edit_hike, delete_hike, like_hike, add_comment_to_hike
 
 urlpatterns = [
 
@@ -11,4 +11,5 @@ urlpatterns = [
     path('edit/<int:pk>', edit_hike, name='edit hike'),
     path('delete/<int:pk>', delete_hike, name='delete hike'),
     path('like/<int:pk>/', like_hike, name='like hike'),
+    path('comment/<int:pk>/', add_comment_to_hike, name='add_comment_to_hike'),
 ]
