@@ -9,13 +9,13 @@
     <img class="card-img-top" src="{{ hike.image.url }}" alt="Card image cap">
     <div class="card-body">
         <h5 class="text-capitalize">{{ hike.name }}</h5>
-        <p class="card-text">{{ hike.description|truncatechars:120 }} </p>
+        <p class="card-text">{{ hike.description|truncatechars:100 }} </p>
     </div>
-    <div class="card-body">
+    <div class="card-body" style="opacity: 0.8">
         {% if user.is_authenticated %}
             <p class="container">
                 <a class="card-text-right" style="padding-right: 80px">Likes: {{ hike.like_set.count }}</a>
-                <a class="card-text-right">Comments: {{ hike.comments.count }}</a>
+                <a class="card-text-right">Comments: {{ hike.comment_set.count}}</a>
             </p>
             <p class="bottom-container">
             <a class="font-weight-light" style="padding-top: 3px" href="{% url 'hike details' hike.id hike.name %}">See

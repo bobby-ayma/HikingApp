@@ -3,6 +3,8 @@
 {% block site_heading %}Edit Hike{% endblock %}
 
 {% block site_content %}
+    <div class="flex-container">
+        <div class="card" style="width: 50rem;">
     <form class="col-lg-6 offset-lg-3" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group">
@@ -19,4 +21,6 @@
         </div>
         <input type="submit" value="Edit" class="btn btn-primary mt-3">
     </form>
+        </div>
+    </div>
 {% endblock %}

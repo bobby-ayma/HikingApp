@@ -1,6 +1,10 @@
 {% extends 'common/base/base.html' %}
 
+
 {% block site_content %}
-    {{ hike.name }}
-    <img class="card-img-top" src="{{ hike.image.url }}" alt="Card image cap">
+    <div class="flex-container">
+        {{ hike.name }}
+        <img class="card-img-top" src="{{ hike.image.url }}" alt="Card image cap">
+    </div>
+
 {% endblock %}

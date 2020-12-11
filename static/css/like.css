@@ -1,37 +1,38 @@
-.container{
-  margin: 0;
-  padding: 0;
-  outline: 0
-  }
+.container {
+    margin: 0;
+    padding: 0;
+    outline: 0
+}
 
 
 .container {
-  position: center;
-  padding: 0.2em 0.2em;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  border-radius: 80px;
-  background-color: #fafafa;
+    position: center;
+    padding: 0.2em 0.2em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 80px;
+    background-color: #fafafa;
 
 }
 
-.container i{
-  font-size: 1.2rem;
-  transition: .4s;
+.container i {
+    font-size: 1.2rem;
+    transition: .4s;
 }
 
 
-.bottom-container{
-  padding-top: 20px;
-  padding-bottom: 0px;
+.bottom-container {
+    padding-top: 20px;
+    padding-bottom: 0px;
 }
 
-.fa-heart:hover{
-  color: deeppink;
+.fa-heart:hover {
+    color: deeppink;
 }
 
-.far.fa-heart{
-  padding-left: 140px;
+.far.fa-heart {
+    padding-left: 140px;
 }
+
 /*.container:hover i{*/
 /*  color: blue;*/
 /*}*/
@@ -42,15 +43,17 @@
 /*}*/
 
 .card-img-top {
-  /* This is where magic happens */
-  height: 200px;
-  max-width: 100%;
-  width: auto;
-
-  display: block;
-  margin: 0 auto;
+    /* This is where magic happens */
+    height: 200px;
+    max-width: 100%;
+    width: auto;
+    opacity: 1;
+    display: block;
+    margin: 0 auto;
 }
 
-.card m-3{
-  max-height: 500px;
+.card m-3 {
+    max-height: 500px;
+    padding: 10px;
+
 }

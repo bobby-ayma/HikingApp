@@ -26,7 +26,7 @@ class Like(models.Model):
 
 class Comment(models.Model):
     hike = models.ForeignKey(Hike, on_delete=models.CASCADE)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, null = True, on_delete=models.CASCADE)
     text = models.TextField(blank=False)
     created_date = models.DateTimeField(default=timezone.now)
     approved_comment = models.BooleanField(default=False)

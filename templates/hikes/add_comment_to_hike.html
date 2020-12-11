@@ -1,9 +1,25 @@
+{#{% extends 'common/base/base.html' %}#}
+{##}
+{#{% block content %}#}
+{#    <h1>New comment</h1>#}
+{#    <form method="POST" class="post-form">{% csrf_token %}#}
+{#        {{ form.as_p }}#}
+{#        <button type="submit" class="save btn btn-default">Send</button>#}
+{#    </form>#}
+{#{% endblock %}#}
 {% extends 'common/base/base.html' %}
 
-{% block content %}
-    <h1>New comment</h1>
-    <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Send</button>
-    </form>
+{% block site_content %}
+    <div class="flex-container" style="opacity: 0.8">
+        <div class="card" style="width: 40rem;">
+            <form class="col-lg-6 offset-lg-3" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <h1>Comment Hike</h1>
+                    {{ form.text }}
+                </div>
+                <input type="submit" value="Submit" class="btn btn-primary mt-3">
+            </form>
+        </div>
+    </div>
 {% endblock %}

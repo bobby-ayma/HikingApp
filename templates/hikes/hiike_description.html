@@ -3,39 +3,42 @@
     Hike Details
 {% endblock %}
 {% block site_content %}
-    <div class="card m-3" style="width: 40rem;">
-        <div class="item">
-            <h2>{{ hike.name }}</h2>
-            <img class="card-img-top" src="{{ hike.image.url }}" alt="Card image cap">
+    <div class="flex-container">
+        <div class="card" style="width: 40rem;">
+            <div class="item">
 
-        </div>
-        <h2>Details</h2>
-        <div class="card-body">
-            {{ hike.description }}
-        </div>
-        <div class="card-body">To be included map
-            {#            <div class="recipe-info-full">#}
-            <div>
-                <h3>to be included Map info, as list, i.e. elevation, km, time</h3>
+                <img class="card-img-top" src="{{ hike.image.url }}" alt="Card image cap">
+
             </div>
-
-            {% for comment in hike.comments.all %}
-                <div class="card-body">
-                    <div class="date">{{ comment.created_date }}</div>
-                    <strong>{{ comment.author }}</strong>
-                    <p>{{ comment.text|linebreaks }}</p>
-                </div>
-            {% empty %}
-                <p>No comments here yet :(</p>
-            {% endfor %}
+            <h2 style="text-align: center">{{ hike.name }}</h2>
             <div class="card-body">
-                <a class="btn btn-default" href="{% url 'add_comment_to_hike' pk=hike.pk %}">Add comment</a>
-                <a class="button edit" href="{% url 'edit hike' hike.id %}">Edit</a>
-                <a class="button delete" href="{% url 'delete hike' hike.id %}">Delete</a>
-                            </div>
+                {{ hike.description }}
+            </div>
+            <div class="card-body" style="padding-top: 3px">
+                <strong>Likes: {{ hike.like_set.count }}</strong>
+            </div>
+            <div class="card-body">To be included map
+
+                <div class="list-group list-group-flush">
+                    {% for comment in hike.comment_set.all %}
+                        <div class="list-group-item" style="padding-bottom: 5px">
+
+                            <strong>{{ comment.text|linebreaks }}</strong>
+                            <div class="date">{{ comment.created_date }}</div>
+                            <p>{{ comment.author.username }}</p>
+                        </div>
+                    {% empty %}
+                        <p>No comments here yet :(</p>
+                    {% endfor %}
+                </div>
+                <div class="buttons">
+                    <a class="btn btn-secondary" href="{% url 'add_comment_to_hike' pk=hike.pk %}">Add comment</a>
+                    <a class="btn btn-secondary" href="{% url 'edit hike' hike.id %}">Edit Hike</a>
+                    <a class="btn btn-secondary" href="{% url 'delete hike' hike.id %}">Delete Hike</a>
+                </div>
+            </div>
         </div>
     </div>
-
     </body>
     </html>
 {% endblock %}

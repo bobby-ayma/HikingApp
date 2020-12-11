@@ -149,15 +149,42 @@ def like_hike(request, pk):
         return redirect('index')
 
 
+# def add_comment_to_hike(request, pk):
+#     hike = get_hike(pk)
+#     if request.method == 'GET':
+#         context = {
+#             'hike': hike,
+#             'form': CommentForm(instance=hike),
+#         }
+#         return render(request, 'hikes/add_comment_to_hike.html', context)
+#     else:
+#             form = CommentForm(
+#                 request.POST,
+#                 instance=hike
+#             )
+#             if form.is_valid():
+#                 form.save()
+#                 return redirect('hike details')
+#
+#             context = {
+#                 'form': form,
+#                 'hike': hike,
+#             }
+#             return render(request,'hikes/add_comment_to_hike.html', context)
+
 def add_comment_to_hike(request, pk):
-    hike = get_object_or_404(Hike, pk=pk)
+    hike = get_hike(pk)
+    author = request.user
     if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
-            comment = form.save()
-            comment.post = hike
+            comment = form.save(commit=False)
+            comment.hike = hike
+            comment.author = author
             comment.save()
-            return redirect('add_comment_to_hike', pk=hike.pk)
+            return redirect('hike details', pk=hike.pk)
     else:
         form = CommentForm()
     return render(request, 'hikes/add_comment_to_hike.html', {'form': form})
+
+
