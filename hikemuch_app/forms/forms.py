@@ -1,5 +1,5 @@
 from hikemuch_app.forms.common import DisabledFormMixin
-from hikemuch_app.models import Hike, Comment
+from hikemuch_app.models import Hike, Comment, MOUNTAINS
 from django import forms
 
 
@@ -8,11 +8,13 @@ class HikeCreateForm(forms.ModelForm):
     class Meta:
         model = Hike
         widgets = {
+            'mountain': forms.Select(choices=MOUNTAINS, attrs={'class': 'form-control'}),
             'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': '3'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': '6'}),
             'image': forms.FileInput(attrs={'class': 'custom-file-input'}), #to add gps coordinates
         }
-        fields = '__all__'
+        # exclude = ('created_by',)
+        exclude = ('created_by',)
 
 
 # class FilterForm(forms.Form):

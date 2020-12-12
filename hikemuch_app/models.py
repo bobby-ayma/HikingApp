@@ -5,17 +5,31 @@ from django.db import models
 from django.utils import timezone
 
 
+MOUNTAINS = (
+        ('UNKNOWN', 'Uknown'),
+        ('RILA', 'Rila'),
+        ('PIRIN', 'Pirin'),
+        ('STARA', 'Stara Planina'),
+        ('VITOSHA', 'Vitosha'),
+    )
+
 class Hike(models.Model):
+    mountain = models.CharField(
+        max_length=32,
+        choices=MOUNTAINS,
+        default='UNKNOWN',
+    )
     name = models.CharField(max_length=25)
     description = models.TextField()
     image = models.ImageField(
-        upload_to='hikes', #to add gps track
+        upload_to='hikes',  # to add gps track
     )
+    created_by = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
 
 
     def __str__(self):
         return self.name
-    # created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+
 
 
 class Like(models.Model):

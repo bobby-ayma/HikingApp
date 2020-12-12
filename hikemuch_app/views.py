@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
@@ -54,6 +55,7 @@ def hike_details(request, pk, slug=None):
     hike = Hike.objects.get(pk=pk)
     if slug and hike.name.lower() != slug.lower():
         return redirect('404')
+    hike.can_edit = hike.created_by_id == request.user.id
     context = {
         'hike': hike,
     }
@@ -61,15 +63,44 @@ def hike_details(request, pk, slug=None):
     return render(request, 'hikes/hiike_description.html', context)  # to be changed
 
 
-class HikeCreateView(GroupRequiredMixin, LoginRequiredMixin, FormView):
-    form_class = HikeCreateForm
-    template_name = 'create.html'
-    success_url = reverse_lazy('index')
-    groups = ['User']
+# class HikeCreateView(LoginRequiredMixin, FormView):
+#     form_class = HikeCreateForm
+#     template_name = 'create.html'
+#     success_url = reverse_lazy('index')
+#     # groups = ['User'] #not used atm
+#
+#     def form_valid(self, form):
+#         # self.created_by = self.request.user
+#         form.save()
+#         return super().form_valid(form)
+#
+@login_required
+def create(request):
+    if request.method == 'GET':
+        context = {
+            'form': HikeCreateForm(),
+            'current_page': 'create',
+            # 'created_by': request.user #taka se pravi da validira dali sobsvenika vijda buton,
+            }
 
-    def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)
+        return render(request, 'create.html', context)
+    else:
+        form = HikeCreateForm(request.POST, request.FILES)
+        print(form)
+        if form.is_valid():
+            hike = form.save(commit=False)
+            hike.created_by_id = request.user.id #tova se pravi za da validira koj e sobstvenik na item
+            hike.save()
+            return redirect('index')
+
+        context = {
+                    'form': form,
+                    'current_page': 'create',
+                }
+
+        return render(request, 'create.html', context)
+
+#
 
 
 # TO BE PUT IN COMMON
@@ -89,6 +120,7 @@ def persist_hike(request, hike, template_name):
     else:
         form = HikeCreateForm(
             request.POST,
+            request.FILES,
             instance=hike
         )
         if form.is_valid():
