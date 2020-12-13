@@ -33,8 +33,10 @@
                 </div>
                 <div class="buttons">
                     <a class="btn btn-secondary" href="{% url 'add_comment_to_hike' pk=hike.pk %}">Add comment</a>
+                    {% if user.pk == hike.created_by.pk %}
                     <a class="btn btn-secondary" href="{% url 'edit hike' hike.id %}">Edit Hike</a>
                     <a class="btn btn-secondary" href="{% url 'delete hike' hike.id %}">Delete Hike</a>
+                    {% endif %}
                 </div>
             </div>
         </div>

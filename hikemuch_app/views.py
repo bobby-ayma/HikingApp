@@ -4,12 +4,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, FormView
 
-from HikingApp.view_mixins import GroupRequiredMixin
 from .forms.forms import HikeCreateForm, FilterForm, CommentForm
 from .forms.forms import DeleteHikeForm
 from .models import Hike, Like
 
-
+#subfunc for the INDEXVIEW in order to perform filtering.
 def extract_filter_values(params):
     order = params['order'] if 'order' in params else FilterForm.ORDER_ASC
     text = params['text'] if 'text' in params else ''
@@ -19,7 +18,7 @@ def extract_filter_values(params):
         'text': text,
     }
 
-
+#reuturns the front page with all hikes filterd based on the filter outlined in the FORMS section.
 class IndexView(ListView):
     template_name = 'index.html'
     model = Hike
@@ -50,7 +49,7 @@ class IndexView(ListView):
 
         return context
 
-
+#returns the details of a hike.
 def hike_details(request, pk, slug=None):
     hike = Hike.objects.get(pk=pk)
     if slug and hike.name.lower() != slug.lower():
@@ -60,7 +59,7 @@ def hike_details(request, pk, slug=None):
         'hike': hike,
     }
 
-    return render(request, 'hikes/hiike_description.html', context)  # to be changed
+    return render(request, 'hikes/hiike_description.html', context)
 
 
 # class HikeCreateView(LoginRequiredMixin, FormView):
@@ -74,6 +73,8 @@ def hike_details(request, pk, slug=None):
 #         form.save()
 #         return super().form_valid(form)
 #
+
+#used to create a hike
 @login_required
 def create(request):
     if request.method == 'GET':
@@ -103,11 +104,12 @@ def create(request):
 #
 
 
-# TO BE PUT IN COMMON
+#subfunc to return a hike based on an ID
 def get_hike(pk):
     return Hike.objects.get(pk=pk)
 
 
+#used only for the edit hike func
 def persist_hike(request, hike, template_name):
     if request.method == 'GET':
         form = HikeCreateForm(instance=hike)
@@ -135,12 +137,14 @@ def persist_hike(request, hike, template_name):
 
 
 # view to edit hikes
+@login_required
 def edit_hike(request, pk):
     hike = get_hike(pk)
     return persist_hike(request, hike, 'hikes/edit')
 
 
 # view to delete hikes
+@login_required
 def delete_hike(request, pk):
     hike = get_hike(pk)
     if request.method == 'GET':
@@ -154,9 +158,10 @@ def delete_hike(request, pk):
         hike.delete()
         return redirect('index')
 
-#like functionality for hikes on the index page
 
 
+
+#subfunction to be able to UNLIKE a hike.
 def object_finder(h_id, u_id):
     all_likes = Like.objects.filter(hike__name__contains=h_id)
     if u_id not in all_likes:
@@ -168,6 +173,7 @@ def object_finder(h_id, u_id):
         return 'create'
 
 
+#likes and existing hike, option not visible to non-authenticated users.
 def like_hike(request, pk):
     hike = Hike.objects.get(pk=pk)
     like = Like(definition='as', user=request.user)
@@ -181,29 +187,7 @@ def like_hike(request, pk):
         return redirect('index')
 
 
-# def add_comment_to_hike(request, pk):
-#     hike = get_hike(pk)
-#     if request.method == 'GET':
-#         context = {
-#             'hike': hike,
-#             'form': CommentForm(instance=hike),
-#         }
-#         return render(request, 'hikes/add_comment_to_hike.html', context)
-#     else:
-#             form = CommentForm(
-#                 request.POST,
-#                 instance=hike
-#             )
-#             if form.is_valid():
-#                 form.save()
-#                 return redirect('hike details')
-#
-#             context = {
-#                 'form': form,
-#                 'hike': hike,
-#             }
-#             return render(request,'hikes/add_comment_to_hike.html', context)
-
+#adds comment to an existing hike
 def add_comment_to_hike(request, pk):
     hike = get_hike(pk)
     author = request.user

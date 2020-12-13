@@ -1,35 +1,96 @@
 {% extends 'common/base/base.html' %}
 
-{% block site_heading %}Profile{% endblock %}
 
 {% block site_content %}
-    <div class="user-container">
-    <div class="card" style="width: 18rem;">
-  <img class="card-img-top" src="{{ profile.profile_image.url }}" alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title">User Information</h5>
-      <ul class="list-group list-group-flush">
-         <li class="list-group-item">Username: {{user}} </li>
-         <li class="list-group-item"> Name: {{user.first_name}} </li>
-        <li class="list-group-item"> Name: {{user.last_name}} </li>
-          </ul>
 
-    </div>
-  </div>
-    {% if hikes %}
+    <div class="row py-5 px-4">
+    <div class="col-md-5 mx-auto">
+        <!-- Profile widget -->
+        <div class="bg-white shadow rounded overflow-hidden" style="opacity: 0.9">
+            <div class="px-5 pt-0 pb-4 cover">
+                <div class="media align-items-end profile-head">
+                    <div class="profile mr-3"><img
+                            src="{{ profile.profile_image.url }}" alt="Card image cap" width="200"
+                            class="rounded mb-2 img-thumbnail">
+                    </div>
+                    <div class="media-body mb-5 text-dark">
+                        <h4 class="mt-0 mb-0">{{ user }} </h4>
+                        <p class="small mb-4"><i></i>{{ user.first_name}} {{ user.last_name}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-light p-4 d-flex justify-content-end text-center">
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item">
+                        <h5 class="font-weight-bold mb-0 d-block">{{ user.hike_set.count }}</h5><small class="text-muted"> <i
+                            class="fas fa-image mr-1"></i>Hikes</small>
+                    </li>
+{#                    <li class="list-inline-item">#}
+{#                        <h5 class="font-weight-bold mb-0 d-block">{{ user.hike_set.comments_set.count }}</h5><small class="text-muted"> <i#}
+{#                            class="fas fa-user mr-1"></i>Comments</small>#}
+{#                    </li>#}
+{#                    <li class="list-inline-item">#}
+{#                        <h5 class="font-weight-bold mb-0 d-block">340</h5><small class="text-muted"> <i#}
+{#                            class="fas fa-user mr-1"></i>Likes</small>#}
+{#                    </li>#}
+                </ul>
+            </div>
+            <div class="px-4 py-3">
+                <h5 class="mb-0">About</h5>
+                <div class="p-4 rounded shadow-sm bg-light">
+                    <p class="font-italic mb-0">Web Developer</p>
 
-       <div class="user-container">
-        <div class="card-columns">
-            {% for hike in hikes %}
-                {% include 'partials/python-details.html' with hike=hike %}
-
-            {% endfor %}
+                </div>
+            </div>
+            <div class="py-4 px-4">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h5 class="mb-0">Recent hikes</h5>
+                </div>
+                <div class="row">
+                    {% if hikes %}
+                        {% for hike in hikes %}
+                            {% include 'partials/python-details.html' with hike=hike %}
+                        {% endfor %}
+                    {% else %}
+                        <div class="text-center">
+                        <h2>There are no hikes yet!</h2>
+                        <a href="{% url 'create' %}" class="btn btn-success">Add New Hike!!</a>
+                    {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
-    {% else %}
-        <div class="text-center">
-            <h2>There are no hikes yet!</h2>
-            <a href="{% url 'create' %}" class="btn btn-success">Add New Hike!!</a>
-        </div>
-    {% endif %}
+    </div>
 {% endblock %}
+
+
+{#    <div class="user-container">#}
+{#    <div class="card" style="width: 18rem;">#}
+{#        <img class="card-img-top" src="{{ profile.profile_image.url }}" alt="Card image cap">#}
+{#        <div class="card-body">#}
+{#            <h5 class="card-title">User Information</h5>#}
+{#            <ul class="list-group list-group-flush">#}
+{#                <li class="list-group-item">Username: {{ user }} </li>#}
+{#                <li class="list-group-item"> Name: {{ user.first_name }} </li>#}
+{#                <li class="list-group-item"> Name: {{ user.last_name }} </li>#}
+{#            </ul>#}
+{##}
+{#        </div>#}
+{#    </div>#}
+{#    {% if hikes %}#}
+{##}
+{#        <div class="user-container">#}
+{#            <div class="card-columns">#}
+{#                {% for hike in hikes %}#}
+{#                    {% include 'partials/python-details.html' with hike=hike %}#}
+{##}
+{#                {% endfor %}#}
+{#            </div>#}
+{#        </div>#}
+{#    {% else %}#}
+{#        <div class="text-center">#}
+{#            <h2>There are no hikes yet!</h2>#}
+{#            <a href="{% url 'create' %}" class="btn btn-success">Add New Hike!!</a>#}
+{#        </div>#}
+{#    {% endif %}#}
+{#{% endblock %}#}
