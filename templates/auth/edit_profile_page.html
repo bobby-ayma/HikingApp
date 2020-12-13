@@ -1,0 +1,18 @@
+{% extends 'common/base/base.html' %}
+
+{% block site_heading %}Edit Profile{% endblock %}
+
+{% block site_content %}
+    <div class="flex-container">
+        <form class="col-lg-6 offset-lg-3" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+            </div>
+
+            <input type="submit" value="Update profile page" class="btn btn-primary mt-3">
+        </form>
+    </div>
+
+{% endblock %}

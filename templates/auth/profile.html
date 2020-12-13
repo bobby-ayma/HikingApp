@@ -1,0 +1,35 @@
+{% extends 'common/base/base.html' %}
+
+{% block site_heading %}Profile{% endblock %}
+
+{% block site_content %}
+    <div class="user-container">
+    <div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="{{ profile.profile_image.url }}" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">User Information</h5>
+      <ul class="list-group list-group-flush">
+         <li class="list-group-item">Username: {{user}} </li>
+         <li class="list-group-item"> Name: {{user.first_name}} </li>
+        <li class="list-group-item"> Name: {{user.last_name}} </li>
+          </ul>
+
+    </div>
+  </div>
+    {% if hikes %}
+
+       <div class="user-container">
+        <div class="card-columns">
+            {% for hike in hikes %}
+                {% include 'partials/python-details.html' with hike=hike %}
+
+            {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <div class="text-center">
+            <h2>There are no hikes yet!</h2>
+            <a href="{% url 'create' %}" class="btn btn-success">Add New Hike!!</a>
+        </div>
+    {% endif %}
+{% endblock %}
